@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Компютер загадал число</h1>
+<?php
+if(!isset($_POST['Send'])){
+    $a=rand(1,100);
+    $score=$_POST['score'];
+}
+else if(isset($_POST['Send'], $_POST['num'], $_POST['a'])&&!empty($_POST)&&!empty($_POST['a'])){
+    $a=$_POST['a'];
+    $score=$_POST['score'];
+    $score++;
+    if($score<=4){
+        if($a>$_POST['num']){
+            echo "Попробуйте больше!";
+        }
+        else if($a<$_POST['num']){
+            echo "Попробуйте меньше!";
+        }
+        else{
+            $a=0;
+            echo "Вы победили за".$score." попыток!<br>";
+            echo "<img src='nice.gif'> <br>";
+            echo "<a href='new.php'>Назад</a>";
+        }
+    }
+    else{
+        echo "Вы превысили число попыток!";
+        echo "<a href='new.php'>Начать сначала!</a>";
+    }
+}
+?>
+<form action="new.php" method="post">
+    <input type="number" name="num" placeholder="Введите своё число"><br>
+    <input type="submit" name="Send" value="Проверить">
+    <input type="hidden" name="a" value="<?=$a?>">
+    <input type="hidden" name="score" value="<?=$score?>">
+</form>
+</body>
+</html>
